@@ -22,30 +22,7 @@ import static io.grpc.stub.ClientCalls.futureUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
-/**
- *
- *
- * <pre>
- * ## API Overview
- * Manages Identity and Access Management (IAM) policies.
- * Any implementation of an API that offers access control features
- * implements the google.iam.v1.IAMPolicy interface.
- * ## Data model
- * Access control is applied when a principal (user or service account), takes
- * some action on a resource exposed by a service. Resources, identified by
- * URI-like names, are the unit of access control specification. Service
- * implementations can choose the granularity of access control and the
- * supported permissions for their resources.
- * For example one database service may allow access control to be
- * specified only at the Table level, whereas another might allow access control
- * to also be specified at the Column level.
- * ## Policy Structure
- * See google.iam.v1.Policy
- * This is intentionally not a CRUD style API because access control policies
- * are created and deleted implicitly with the resources to which they are
- * attached.
- * </pre>
- */
+/** */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler",
     comments = "Source: google/iam/v1/iam_policy.proto")
@@ -215,73 +192,24 @@ public final class IAMPolicyGrpc {
     return IAMPolicyFutureStub.newStub(factory, channel);
   }
 
-  /**
-   *
-   *
-   * <pre>
-   * ## API Overview
-   * Manages Identity and Access Management (IAM) policies.
-   * Any implementation of an API that offers access control features
-   * implements the google.iam.v1.IAMPolicy interface.
-   * ## Data model
-   * Access control is applied when a principal (user or service account), takes
-   * some action on a resource exposed by a service. Resources, identified by
-   * URI-like names, are the unit of access control specification. Service
-   * implementations can choose the granularity of access control and the
-   * supported permissions for their resources.
-   * For example one database service may allow access control to be
-   * specified only at the Table level, whereas another might allow access control
-   * to also be specified at the Column level.
-   * ## Policy Structure
-   * See google.iam.v1.Policy
-   * This is intentionally not a CRUD style API because access control policies
-   * are created and deleted implicitly with the resources to which they are
-   * attached.
-   * </pre>
-   */
+  /** */
   public abstract static class IAMPolicyImplBase implements io.grpc.BindableService {
 
-    /**
-     *
-     *
-     * <pre>
-     * Sets the access control policy on the specified resource. Replaces any
-     * existing policy.
-     * </pre>
-     */
+    /** */
     public void setIamPolicy(
         com.google.iam.v1.SetIamPolicyRequest request,
         io.grpc.stub.StreamObserver<com.google.iam.v1.Policy> responseObserver) {
       asyncUnimplementedUnaryCall(getSetIamPolicyMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Gets the access control policy for a resource.
-     * Returns an empty policy if the resource exists and does not have a policy
-     * set.
-     * </pre>
-     */
+    /** */
     public void getIamPolicy(
         com.google.iam.v1.GetIamPolicyRequest request,
         io.grpc.stub.StreamObserver<com.google.iam.v1.Policy> responseObserver) {
       asyncUnimplementedUnaryCall(getGetIamPolicyMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns permissions that a caller has on the specified resource.
-     * If the resource does not exist, this will return an empty set of
-     * permissions, not a NOT_FOUND error.
-     * Note: This operation is designed to be used for building permission-aware
-     * UIs and command-line tools, not for authorization checking. This operation
-     * may "fail open" without warning.
-     * </pre>
-     */
+    /** */
     public void testIamPermissions(
         com.google.iam.v1.TestIamPermissionsRequest request,
         io.grpc.stub.StreamObserver<com.google.iam.v1.TestIamPermissionsResponse>
@@ -315,30 +243,7 @@ public final class IAMPolicyGrpc {
     }
   }
 
-  /**
-   *
-   *
-   * <pre>
-   * ## API Overview
-   * Manages Identity and Access Management (IAM) policies.
-   * Any implementation of an API that offers access control features
-   * implements the google.iam.v1.IAMPolicy interface.
-   * ## Data model
-   * Access control is applied when a principal (user or service account), takes
-   * some action on a resource exposed by a service. Resources, identified by
-   * URI-like names, are the unit of access control specification. Service
-   * implementations can choose the granularity of access control and the
-   * supported permissions for their resources.
-   * For example one database service may allow access control to be
-   * specified only at the Table level, whereas another might allow access control
-   * to also be specified at the Column level.
-   * ## Policy Structure
-   * See google.iam.v1.Policy
-   * This is intentionally not a CRUD style API because access control policies
-   * are created and deleted implicitly with the resources to which they are
-   * attached.
-   * </pre>
-   */
+  /** */
   public static final class IAMPolicyStub extends io.grpc.stub.AbstractAsyncStub<IAMPolicyStub> {
     private IAMPolicyStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -349,14 +254,7 @@ public final class IAMPolicyGrpc {
       return new IAMPolicyStub(channel, callOptions);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Sets the access control policy on the specified resource. Replaces any
-     * existing policy.
-     * </pre>
-     */
+    /** */
     public void setIamPolicy(
         com.google.iam.v1.SetIamPolicyRequest request,
         io.grpc.stub.StreamObserver<com.google.iam.v1.Policy> responseObserver) {
@@ -366,15 +264,7 @@ public final class IAMPolicyGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Gets the access control policy for a resource.
-     * Returns an empty policy if the resource exists and does not have a policy
-     * set.
-     * </pre>
-     */
+    /** */
     public void getIamPolicy(
         com.google.iam.v1.GetIamPolicyRequest request,
         io.grpc.stub.StreamObserver<com.google.iam.v1.Policy> responseObserver) {
@@ -384,18 +274,7 @@ public final class IAMPolicyGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns permissions that a caller has on the specified resource.
-     * If the resource does not exist, this will return an empty set of
-     * permissions, not a NOT_FOUND error.
-     * Note: This operation is designed to be used for building permission-aware
-     * UIs and command-line tools, not for authorization checking. This operation
-     * may "fail open" without warning.
-     * </pre>
-     */
+    /** */
     public void testIamPermissions(
         com.google.iam.v1.TestIamPermissionsRequest request,
         io.grpc.stub.StreamObserver<com.google.iam.v1.TestIamPermissionsResponse>
@@ -407,30 +286,7 @@ public final class IAMPolicyGrpc {
     }
   }
 
-  /**
-   *
-   *
-   * <pre>
-   * ## API Overview
-   * Manages Identity and Access Management (IAM) policies.
-   * Any implementation of an API that offers access control features
-   * implements the google.iam.v1.IAMPolicy interface.
-   * ## Data model
-   * Access control is applied when a principal (user or service account), takes
-   * some action on a resource exposed by a service. Resources, identified by
-   * URI-like names, are the unit of access control specification. Service
-   * implementations can choose the granularity of access control and the
-   * supported permissions for their resources.
-   * For example one database service may allow access control to be
-   * specified only at the Table level, whereas another might allow access control
-   * to also be specified at the Column level.
-   * ## Policy Structure
-   * See google.iam.v1.Policy
-   * This is intentionally not a CRUD style API because access control policies
-   * are created and deleted implicitly with the resources to which they are
-   * attached.
-   * </pre>
-   */
+  /** */
   public static final class IAMPolicyBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<IAMPolicyBlockingStub> {
     private IAMPolicyBlockingStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
@@ -443,43 +299,17 @@ public final class IAMPolicyGrpc {
       return new IAMPolicyBlockingStub(channel, callOptions);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Sets the access control policy on the specified resource. Replaces any
-     * existing policy.
-     * </pre>
-     */
+    /** */
     public com.google.iam.v1.Policy setIamPolicy(com.google.iam.v1.SetIamPolicyRequest request) {
       return blockingUnaryCall(getChannel(), getSetIamPolicyMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Gets the access control policy for a resource.
-     * Returns an empty policy if the resource exists and does not have a policy
-     * set.
-     * </pre>
-     */
+    /** */
     public com.google.iam.v1.Policy getIamPolicy(com.google.iam.v1.GetIamPolicyRequest request) {
       return blockingUnaryCall(getChannel(), getGetIamPolicyMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns permissions that a caller has on the specified resource.
-     * If the resource does not exist, this will return an empty set of
-     * permissions, not a NOT_FOUND error.
-     * Note: This operation is designed to be used for building permission-aware
-     * UIs and command-line tools, not for authorization checking. This operation
-     * may "fail open" without warning.
-     * </pre>
-     */
+    /** */
     public com.google.iam.v1.TestIamPermissionsResponse testIamPermissions(
         com.google.iam.v1.TestIamPermissionsRequest request) {
       return blockingUnaryCall(
@@ -487,30 +317,7 @@ public final class IAMPolicyGrpc {
     }
   }
 
-  /**
-   *
-   *
-   * <pre>
-   * ## API Overview
-   * Manages Identity and Access Management (IAM) policies.
-   * Any implementation of an API that offers access control features
-   * implements the google.iam.v1.IAMPolicy interface.
-   * ## Data model
-   * Access control is applied when a principal (user or service account), takes
-   * some action on a resource exposed by a service. Resources, identified by
-   * URI-like names, are the unit of access control specification. Service
-   * implementations can choose the granularity of access control and the
-   * supported permissions for their resources.
-   * For example one database service may allow access control to be
-   * specified only at the Table level, whereas another might allow access control
-   * to also be specified at the Column level.
-   * ## Policy Structure
-   * See google.iam.v1.Policy
-   * This is intentionally not a CRUD style API because access control policies
-   * are created and deleted implicitly with the resources to which they are
-   * attached.
-   * </pre>
-   */
+  /** */
   public static final class IAMPolicyFutureStub
       extends io.grpc.stub.AbstractFutureStub<IAMPolicyFutureStub> {
     private IAMPolicyFutureStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
@@ -522,47 +329,21 @@ public final class IAMPolicyGrpc {
       return new IAMPolicyFutureStub(channel, callOptions);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Sets the access control policy on the specified resource. Replaces any
-     * existing policy.
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<com.google.iam.v1.Policy>
         setIamPolicy(com.google.iam.v1.SetIamPolicyRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getSetIamPolicyMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Gets the access control policy for a resource.
-     * Returns an empty policy if the resource exists and does not have a policy
-     * set.
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<com.google.iam.v1.Policy>
         getIamPolicy(com.google.iam.v1.GetIamPolicyRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getGetIamPolicyMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns permissions that a caller has on the specified resource.
-     * If the resource does not exist, this will return an empty set of
-     * permissions, not a NOT_FOUND error.
-     * Note: This operation is designed to be used for building permission-aware
-     * UIs and command-line tools, not for authorization checking. This operation
-     * may "fail open" without warning.
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.iam.v1.TestIamPermissionsResponse>
         testIamPermissions(com.google.iam.v1.TestIamPermissionsRequest request) {
