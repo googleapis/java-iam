@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://www.github.com/googleapis/java-iam/compare/v1.0.14...v1.1.0) (2021-08-04)
+
+
+### Features
+
+* configure initial sp version ([#165](https://www.github.com/googleapis/java-iam/issues/165)) ([739852f](https://www.github.com/googleapis/java-iam/commit/739852f348ec0ccafb8e38ce94dd79427e2525d6))
+
 ### [1.0.14](https://www.github.com/googleapis/java-iam/compare/v1.0.13...v1.0.14) (2021-05-11)
 
 
