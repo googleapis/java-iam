@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-iam.git",
-        "sha": "ec4debeb779d3561d6ce10d2bc7f871a1f84ae8c"
+        "sha": "36a09e753f1439d1975c5b388d460d84646f9190"
       }
     },
     {
@@ -19,7 +19,7 @@
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "a4be3384ccb92364795d981f2863f6986fcee620"
+        "sha": "717a6a1fe247df095092de1321eadc9da887a06c"
       }
     }
   ],
@@ -59,6 +59,7 @@
     ".kokoro/presubmit/clirr.cfg",
     ".kokoro/presubmit/common.cfg",
     ".kokoro/presubmit/dependencies.cfg",
+    ".kokoro/presubmit/graalvm-native.cfg",
     ".kokoro/presubmit/integration.cfg",
     ".kokoro/presubmit/java11.cfg",
     ".kokoro/presubmit/java7.cfg",
