@@ -22,18 +22,20 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
 public class DenyIT {
 
+
   private static final String PROJECT_ID = System.getenv("GOOGLE_CLOUD_PROJECT");
+  private static final String GOOGLE_APPLICATION_CREDENTIALS = System.getenv("GOOGLE_APPLICATION_CREDENTIALS");
   private static String POLICY_NAME;
 
   private ByteArrayOutputStream stdOut;
@@ -41,11 +43,10 @@ public class DenyIT {
   // Check if the required environment variables are set.
   public static void requireEnvVar(String envVarName) {
     assertWithMessage(String.format("Missing environment variable '%s' ", envVarName))
-        .that(System.getenv(envVarName))
-        .isNotEmpty();
+        .that(System.getenv(envVarName)).isNotEmpty();
   }
 
-  @BeforeAll
+  @BeforeClass
   public static void setUp()
       throws IOException, InterruptedException, ExecutionException, TimeoutException {
     final PrintStream out = System.out;
@@ -63,7 +64,8 @@ public class DenyIT {
     System.setOut(out);
   }
 
-  @AfterAll
+
+  @AfterClass
   public static void cleanup()
       throws IOException, InterruptedException, ExecutionException, TimeoutException {
     final PrintStream out = System.out;
@@ -79,13 +81,13 @@ public class DenyIT {
     System.setOut(out);
   }
 
-  @BeforeEach
+  @Before
   public void beforeEach() {
     stdOut = new ByteArrayOutputStream();
     System.setOut(new PrintStream(stdOut));
   }
 
-  @AfterEach
+  @After
   public void afterEach() {
     stdOut = null;
     System.setOut(null);
@@ -110,4 +112,5 @@ public class DenyIT {
     UpdateDenyPolicy.updateDenyPolicy(PROJECT_ID, POLICY_NAME);
     assertThat(stdOut.toString()).contains("Updated the policy name");
   }
+
 }
