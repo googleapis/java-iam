@@ -76,7 +76,7 @@ public class UpdateDenyPolicy {
 
       Policy response = policiesClient.updatePolicyAsync(updatePolicyRequest)
           .get(3, TimeUnit.MINUTES);
-      System.out.println(response.getName());
+      System.out.println("Updated the policy name " + response.getName());
     }
   }
 }

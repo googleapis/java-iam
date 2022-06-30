@@ -54,7 +54,7 @@ public class DeleteDenyPolicy {
 
       Policy policy = policiesClient.deletePolicyAsync(deletePolicyRequest)
           .get(3, TimeUnit.MINUTES);
-      System.out.println(policy.getName());
+      System.out.println("Successfully deleted the policy: " + policy.getName());
     }
   }
 }

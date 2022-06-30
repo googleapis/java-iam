@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
 import java.io.ByteArrayOutputStream;
@@ -56,6 +57,7 @@ public class DenyIT {
     POLICY_NAME = "limit-project-deletion";
 
     CreateDenyPolicy.createDenyPolicy(PROJECT_ID, POLICY_NAME);
+    assertThat(stdOut.toString()).contains("Successfully created the policy:");
 
     stdOut.close();
     System.setOut(out);
@@ -72,6 +74,7 @@ public class DenyIT {
     requireEnvVar("GOOGLE_CLOUD_PROJECT");
 
     DeleteDenyPolicy.deleteDenyPolicy(PROJECT_ID, POLICY_NAME);
+    assertThat(stdOut.toString()).contains("Successfully deleted the policy:");
 
     stdOut.close();
     System.setOut(out);
@@ -92,17 +95,21 @@ public class DenyIT {
   @Test
   public void testListDenyPolicies() throws IOException {
     ListDenyPolicies.listDenyPolicies(PROJECT_ID);
+    assertThat(stdOut.toString()).contains("Listed all deny policies in the project");
   }
 
   @Test
   public void testGetDenyPolicy() throws IOException {
     GetDenyPolicy.getDenyPolicy(PROJECT_ID, POLICY_NAME);
+    assertThat(stdOut.toString()).contains("Successfully retrieved the policy: ");
+    assertThat(stdOut.toString()).contains(POLICY_NAME);
   }
 
   @Test
   public void testUpdateDenyPolicy()
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
     UpdateDenyPolicy.updateDenyPolicy(PROJECT_ID, POLICY_NAME);
+    assertThat(stdOut.toString()).contains("Updated the policy name");
   }
 
 }

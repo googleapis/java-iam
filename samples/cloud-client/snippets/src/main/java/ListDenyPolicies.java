@@ -41,6 +41,7 @@ public class ListDenyPolicies {
       for (Policy policy : policiesClient.listPolicies(policyParent).iterateAll()) {
         System.out.println(policy.getName());
       }
+      System.out.println("Listed all deny policies in the project");
     }
   }
 }

@@ -53,7 +53,6 @@ public class CreateDenyPolicy {
 
       Policy policy = Policy.newBuilder()
           .setName(policyName)
-          .setDisplayName("something")
           .addRules(PolicyRule.newBuilder()
               .setDescription(
                   "block all principals from deleting projects, unless the principal is a member of project-admins@example.com and the project being deleted has a tag with the value test")
@@ -78,7 +77,7 @@ public class CreateDenyPolicy {
 
       Policy response = policiesClient.createPolicyAsync(createPolicyRequest)
           .get(3, TimeUnit.MINUTES);
-      System.out.println(response.getName());
+      System.out.println("Successfully created the policy: " + response.getName());
     }
   }
 }

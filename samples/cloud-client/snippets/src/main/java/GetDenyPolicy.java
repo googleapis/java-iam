@@ -52,7 +52,7 @@ public class GetDenyPolicy {
           .build();
 
       Policy policy = policiesClient.getPolicy(getPolicyRequest);
-      System.out.println(policy.getName());
+      System.out.println("Successfully retrieved the policy: " + policy.getName());
     }
   }
 
