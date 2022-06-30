@@ -33,7 +33,6 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class DenyIT {
 
-
   private static final String PROJECT_ID = System.getenv("GOOGLE_CLOUD_PROJECT");
   private static String POLICY_NAME;
 
@@ -42,7 +41,8 @@ public class DenyIT {
   // Check if the required environment variables are set.
   public static void requireEnvVar(String envVarName) {
     assertWithMessage(String.format("Missing environment variable '%s' ", envVarName))
-        .that(System.getenv(envVarName)).isNotEmpty();
+        .that(System.getenv(envVarName))
+        .isNotEmpty();
   }
 
   @BeforeAll
@@ -62,7 +62,6 @@ public class DenyIT {
     stdOut.close();
     System.setOut(out);
   }
-
 
   @AfterAll
   public static void cleanup()
@@ -111,5 +110,4 @@ public class DenyIT {
     UpdateDenyPolicy.updateDenyPolicy(PROJECT_ID, POLICY_NAME);
     assertThat(stdOut.toString()).contains("Updated the policy name");
   }
-
 }

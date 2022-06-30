@@ -35,8 +35,7 @@ public class ListDenyPolicies {
           String.format("cloudresourcemanager.googleapis.com/projects/%s", projectId)
               .replaceAll("/", "%2F");
 
-      String policyParent = String.format(
-          "policies/%s/denypolicies", attachmentPoint);
+      String policyParent = String.format("policies/%s/denypolicies", attachmentPoint);
 
       for (Policy policy : policiesClient.listPolicies(policyParent).iterateAll()) {
         System.out.println(policy.getName());

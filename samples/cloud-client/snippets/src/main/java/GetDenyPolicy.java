@@ -33,7 +33,6 @@ public class GetDenyPolicy {
     getDenyPolicy(projectId, policyName);
   }
 
-
   // Retrieve the Deny policy given the project id and policy name.
   public static void getDenyPolicy(String projectId, String policyName) throws IOException {
     // Create the IAM Policies client.
@@ -43,17 +42,15 @@ public class GetDenyPolicy {
           String.format("cloudresourcemanager.googleapis.com/projects/%s", projectId)
               .replaceAll("/", "%2F");
 
-      String policyParent = String.format(
-          "policies/%s/denypolicies/%s", attachmentPoint, policyName);
+      String policyParent =
+          String.format("policies/%s/denypolicies/%s", attachmentPoint, policyName);
 
       // Specify the policyParent and execute the Policy Get request.
-      GetPolicyRequest getPolicyRequest = GetPolicyRequest.newBuilder()
-          .setName(policyParent)
-          .build();
+      GetPolicyRequest getPolicyRequest =
+          GetPolicyRequest.newBuilder().setName(policyParent).build();
 
       Policy policy = policiesClient.getPolicy(getPolicyRequest);
       System.out.println("Successfully retrieved the policy: " + policy.getName());
     }
   }
-
 }

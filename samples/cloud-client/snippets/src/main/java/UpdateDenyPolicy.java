@@ -49,33 +49,38 @@ public class UpdateDenyPolicy {
           String.format("cloudresourcemanager.googleapis.com/projects/%s", projectId)
               .replaceAll("/", "%2F");
 
-      String policyParent = String.format(
-          "policies/%s/denypolicies/%s", attachmentPoint, policyName);
+      String policyParent =
+          String.format("policies/%s/denypolicies/%s", attachmentPoint, policyName);
 
-      Policy policy = Policy.newBuilder()
-          .setName(policyParent)
-          .addRules(PolicyRule.newBuilder()
-              .setDescription(
-                  "block all principals from deleting projects, unless the principal is a member of project-admins@example.com and the project being deleted has a tag with the value test")
-              .setDenyRule(DenyRule.newBuilder()
-                  .addDeniedPrincipals("principalSet://goog/public:all")
-                  .addExceptionPrincipals("principalSet://goog/group/project-admins@example.com")
-                  .addDeniedPermissions("cloudresourcemanager.googleapis.com/projects.delete")
-                  .addExceptionPermissions("iam.googleapis.com/roles.list")
-                  .setDenialCondition(Expr.newBuilder()
-                      .setExpression("!resource.matchTag('12345678/env', 'prod')")
-                      .setTitle("Only for non-test projects")
+      Policy policy =
+          Policy.newBuilder()
+              .setName(policyParent)
+              .addRules(
+                  PolicyRule.newBuilder()
+                      .setDescription(
+                          "block all principals from deleting projects, unless the principal is a member of project-admins@example.com and the project being deleted has a tag with the value test")
+                      .setDenyRule(
+                          DenyRule.newBuilder()
+                              .addDeniedPrincipals("principalSet://goog/public:all")
+                              .addExceptionPrincipals(
+                                  "principalSet://goog/group/project-admins@example.com")
+                              .addDeniedPermissions(
+                                  "cloudresourcemanager.googleapis.com/projects.delete")
+                              .addExceptionPermissions("iam.googleapis.com/roles.list")
+                              .setDenialCondition(
+                                  Expr.newBuilder()
+                                      .setExpression("!resource.matchTag('12345678/env', 'prod')")
+                                      .setTitle("Only for non-test projects")
+                                      .build())
+                              .build())
                       .build())
-                  .build())
-              .build())
-          .build();
+              .build();
 
-      UpdatePolicyRequest updatePolicyRequest = UpdatePolicyRequest.newBuilder()
-          .setPolicy(policy)
-          .build();
+      UpdatePolicyRequest updatePolicyRequest =
+          UpdatePolicyRequest.newBuilder().setPolicy(policy).build();
 
-      Policy response = policiesClient.updatePolicyAsync(updatePolicyRequest)
-          .get(3, TimeUnit.MINUTES);
+      Policy response =
+          policiesClient.updatePolicyAsync(updatePolicyRequest).get(3, TimeUnit.MINUTES);
       System.out.println("Updated the policy name " + response.getName());
     }
   }

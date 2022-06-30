@@ -45,15 +45,14 @@ public class DeleteDenyPolicy {
           String.format("cloudresourcemanager.googleapis.com/projects/%s", projectId)
               .replaceAll("/", "%2F");
 
-      String policyParent = String.format(
-          "policies/%s/denypolicies/%s", attachmentPoint, policyName);
+      String policyParent =
+          String.format("policies/%s/denypolicies/%s", attachmentPoint, policyName);
 
-      DeletePolicyRequest deletePolicyRequest = DeletePolicyRequest.newBuilder()
-          .setName(policyParent)
-          .build();
+      DeletePolicyRequest deletePolicyRequest =
+          DeletePolicyRequest.newBuilder().setName(policyParent).build();
 
-      Policy policy = policiesClient.deletePolicyAsync(deletePolicyRequest)
-          .get(3, TimeUnit.MINUTES);
+      Policy policy =
+          policiesClient.deletePolicyAsync(deletePolicyRequest).get(3, TimeUnit.MINUTES);
       System.out.println("Successfully deleted the policy: " + policy.getName());
     }
   }
