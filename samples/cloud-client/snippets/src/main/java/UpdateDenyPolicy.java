@@ -19,6 +19,7 @@ import com.google.iam.v2beta.PoliciesClient;
 import com.google.iam.v2beta.Policy;
 import com.google.iam.v2beta.PolicyRule;
 import com.google.iam.v2beta.UpdatePolicyRequest;
+import com.google.longrunning.Operation;
 import com.google.type.Expr;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -34,13 +35,17 @@ public class UpdateDenyPolicy {
     // ID or number of the Google Cloud project you want to use.
     String projectId = "your-google-cloud-project-id";
 
-    // Specify the name of the Deny policy you want to retrieve.
-    String policyName = "deny-policy-name";
+    // Specify the id of the Deny policy you want to retrieve.
+    String policyId = "deny-policy-id";
 
-    updateDenyPolicy(projectId, policyName);
+    // Etag field that identifies the policy version. The etag changes each time
+    // you update the policy. Get the etag of a policy by performing a Policy Get request.
+    String etag = "policy_etag";
+
+    updateDenyPolicy(projectId, policyId, etag);
   }
 
-  public static void updateDenyPolicy(String projectId, String policyName)
+  public static void updateDenyPolicy(String projectId, String policyId, String etag)
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
 
     try (PoliciesClient policiesClient = PoliciesClient.create()) {
@@ -50,11 +55,12 @@ public class UpdateDenyPolicy {
               .replaceAll("/", "%2F");
 
       String policyParent =
-          String.format("policies/%s/denypolicies/%s", attachmentPoint, policyName);
+          String.format("policies/%s/denypolicies/%s", attachmentPoint, policyId);
 
       Policy policy =
           Policy.newBuilder()
               .setName(policyParent)
+              .setEtag(etag)
               .addRules(
                   PolicyRule.newBuilder()
                       .setDescription(
@@ -62,8 +68,8 @@ public class UpdateDenyPolicy {
                       .setDenyRule(
                           DenyRule.newBuilder()
                               .addDeniedPrincipals("principalSet://goog/public:all")
-                              .addExceptionPrincipals(
-                                  "principalSet://goog/group/project-admins@example.com")
+                              // .addExceptionPrincipals(
+                              //     "principalSet://goog/group/project-admins@example.com")
                               .addDeniedPermissions(
                                   "cloudresourcemanager.googleapis.com/projects.delete")
                               .addExceptionPermissions("iam.googleapis.com/roles.list")
@@ -79,9 +85,15 @@ public class UpdateDenyPolicy {
       UpdatePolicyRequest updatePolicyRequest =
           UpdatePolicyRequest.newBuilder().setPolicy(policy).build();
 
-      Policy response =
-          policiesClient.updatePolicyAsync(updatePolicyRequest).get(3, TimeUnit.MINUTES);
-      System.out.println("Updated the policy name " + response.getName());
+      Operation operation = policiesClient.updatePolicyCallable().futureCall(updatePolicyRequest)
+          .get(3, TimeUnit.MINUTES);
+
+      if (operation.hasError()) {
+        System.out.println("Error in updating the policy " + operation.getError());
+        return;
+      }
+
+      System.out.println("Updated the deny policy: " + policyId);
     }
   }
 }

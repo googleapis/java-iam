@@ -16,7 +16,7 @@
 
 import com.google.iam.v2beta.DeletePolicyRequest;
 import com.google.iam.v2beta.PoliciesClient;
-import com.google.iam.v2beta.Policy;
+import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -31,13 +31,13 @@ public class DeleteDenyPolicy {
     // ID or number of the Google Cloud project you want to use.
     String projectId = "your-google-cloud-project-id";
 
-    // Specify the name of the Deny policy you want to delete.
-    String policyName = "deny-policy-name";
+    // Specify the id of the Deny policy you want to retrieve.
+    String policyId = "deny-policy-id";
 
-    deleteDenyPolicy(projectId, policyName);
+    deleteDenyPolicy(projectId, policyId);
   }
 
-  public static void deleteDenyPolicy(String projectId, String policyName)
+  public static void deleteDenyPolicy(String projectId, String policyId)
       throws IOException, InterruptedException, ExecutionException, TimeoutException {
     try (PoliciesClient policiesClient = PoliciesClient.create()) {
 
@@ -46,14 +46,20 @@ public class DeleteDenyPolicy {
               .replaceAll("/", "%2F");
 
       String policyParent =
-          String.format("policies/%s/denypolicies/%s", attachmentPoint, policyName);
+          String.format("policies/%s/denypolicies/%s", attachmentPoint, policyId);
 
       DeletePolicyRequest deletePolicyRequest =
           DeletePolicyRequest.newBuilder().setName(policyParent).build();
 
-      Policy policy =
-          policiesClient.deletePolicyAsync(deletePolicyRequest).get(3, TimeUnit.MINUTES);
-      System.out.println("Successfully deleted the policy: " + policy.getName());
+      Operation operation = policiesClient.deletePolicyCallable().futureCall(deletePolicyRequest)
+          .get(3, TimeUnit.MINUTES);
+
+      if (operation.hasError()) {
+        System.out.println("Error in deleting the policy " + operation.getError());
+        return;
+      }
+
+      System.out.println("Deleted the deny policy: " + policyId);
     }
   }
 }

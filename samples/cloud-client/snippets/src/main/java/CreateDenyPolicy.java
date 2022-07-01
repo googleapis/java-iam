@@ -19,9 +19,9 @@ import com.google.iam.v2beta.DenyRule;
 import com.google.iam.v2beta.PoliciesClient;
 import com.google.iam.v2beta.Policy;
 import com.google.iam.v2beta.PolicyRule;
+import com.google.longrunning.Operation;
 import com.google.type.Expr;
 import java.io.IOException;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -34,13 +34,13 @@ public class CreateDenyPolicy {
     // ID or number of the Google Cloud project you want to use.
     String projectId = "your-google-cloud-project-id";
 
-    // Specify the name of the Deny policy you want to retrieve.
-    String policyName = "deny-policy-name";
+    // Specify the id of the Deny policy you want to retrieve.
+    String policyId = "deny-policy-id";
 
-    createDenyPolicy(projectId, policyName);
+    createDenyPolicy(projectId, policyId);
   }
 
-  public static void createDenyPolicy(String projectId, String policyName)
+  public static void createDenyPolicy(String projectId, String policyId)
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
 
     try (PoliciesClient policiesClient = PoliciesClient.create()) {
@@ -52,7 +52,7 @@ public class CreateDenyPolicy {
 
       Policy policy =
           Policy.newBuilder()
-              .setName(policyName)
+              .setName("Restrict access to test env project deletion")
               .addRules(
                   PolicyRule.newBuilder()
                       .setDescription(
@@ -60,8 +60,8 @@ public class CreateDenyPolicy {
                       .setDenyRule(
                           DenyRule.newBuilder()
                               .addDeniedPrincipals("principalSet://goog/public:all")
-                              .addExceptionPrincipals(
-                                  "principalSet://goog/group/project-admins@example.com")
+                              // .addExceptionPrincipals(
+                              //     "principalSet://goog/group/project-admins@example.com")
                               .addDeniedPermissions(
                                   "cloudresourcemanager.googleapis.com/projects.delete")
                               .addExceptionPermissions("iam.googleapis.com/roles.list")
@@ -78,12 +78,21 @@ public class CreateDenyPolicy {
           CreatePolicyRequest.newBuilder()
               .setParent(policyParent)
               .setPolicy(policy)
-              .setPolicyId("deny-" + UUID.randomUUID())
+              .setPolicyId(policyId)
               .build();
 
-      Policy response =
-          policiesClient.createPolicyAsync(createPolicyRequest).get(3, TimeUnit.MINUTES);
-      System.out.println("Successfully created the policy: " + response.getName());
+      Operation operation = policiesClient.createPolicyCallable().futureCall(createPolicyRequest)
+          .get(3, TimeUnit.MINUTES);
+
+      if (operation.hasError()) {
+        System.out.println("Error in creating the policy " + operation.getError());
+        return;
+      }
+
+      Policy response = policiesClient.getPolicy(String.format("%s/%s", policyParent, policyId));
+      String policyName = response.getName();
+      System.out.println(
+          "Created the deny policy: " + policyName.substring(policyName.lastIndexOf("/") + 1));
     }
   }
 }
