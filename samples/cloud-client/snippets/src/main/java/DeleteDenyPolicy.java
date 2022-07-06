@@ -31,30 +31,47 @@ public class DeleteDenyPolicy {
     // ID or number of the Google Cloud project you want to use.
     String projectId = "your-google-cloud-project-id";
 
-    // Specify the id of the Deny policy you want to retrieve.
+    // Specify the id of the deny policy you want to retrieve.
     String policyId = "deny-policy-id";
 
     deleteDenyPolicy(projectId, policyId);
   }
 
+  // Delete the policy if you no longer want to enforce the rules in a deny policy.
   public static void deleteDenyPolicy(String projectId, String policyId)
       throws IOException, InterruptedException, ExecutionException, TimeoutException {
     try (PoliciesClient policiesClient = PoliciesClient.create()) {
 
+      // Each deny policy is attached to an organization, folder, or project.
+      // To work with deny policies, specify the attachment point.
+      //
+      // Its format can be one of the following:
+      // 1. cloudresourcemanager.googleapis.com/organizations/ORG_ID
+      // 2. cloudresourcemanager.googleapis.com/folders/FOLDER_ID
+      // 3. cloudresourcemanager.googleapis.com/projects/PROJECT_ID
+      //
+      // The attachment point is identified by its URL-encoded full resource name. Hence, replace
+      // the "/" with "%2F".
       String attachmentPoint =
           String.format("cloudresourcemanager.googleapis.com/projects/%s", projectId)
               .replaceAll("/", "%2F");
 
+      // Construct the full path of the resource to which the policy is attached to.
+      // Its format is: "policies/{attachmentPoint}/denypolicies/{policyId}"
       String policyParent =
           String.format("policies/%s/denypolicies/%s", attachmentPoint, policyId);
 
+      // Create the DeletePolicy request.
       DeletePolicyRequest deletePolicyRequest =
-          DeletePolicyRequest.newBuilder().setName(policyParent).build();
+          DeletePolicyRequest.newBuilder()
+              .setName(policyParent)
+              .build();
 
+      // Delete the policy and wait for the operation to complete.
       Operation operation = policiesClient.deletePolicyCallable().futureCall(deletePolicyRequest)
           .get(3, TimeUnit.MINUTES);
 
-      if (operation.hasError()) {
+      if (!operation.getDone() || operation.hasError()) {
         System.out.println("Error in deleting the policy " + operation.getError());
         return;
       }

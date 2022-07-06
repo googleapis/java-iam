@@ -27,27 +27,41 @@ public class GetDenyPolicy {
     // ID or number of the Google Cloud project you want to use.
     String projectId = "your-google-cloud-project-id";
 
-    // Specify the id of the Deny policy you want to retrieve.
+    // Specify the id of the deny policy you want to retrieve.
     String policyId = "deny-policy-id";
 
     getDenyPolicy(projectId, policyId);
   }
 
-  // Retrieve the Deny policy given the project id and policy name.
+  // Retrieve the deny policy given the project id and policy id.
   public static void getDenyPolicy(String projectId, String policyId) throws IOException {
     // Create the IAM Policies client.
     try (PoliciesClient policiesClient = PoliciesClient.create()) {
 
+      // Each deny policy is attached to an organization, folder, or project.
+      // To work with deny policies, specify the attachment point.
+      //
+      // Its format can be one of the following:
+      // 1. cloudresourcemanager.googleapis.com/organizations/ORG_ID
+      // 2. cloudresourcemanager.googleapis.com/folders/FOLDER_ID
+      // 3. cloudresourcemanager.googleapis.com/projects/PROJECT_ID
+      //
+      // The attachment point is identified by its URL-encoded full resource name. Hence, replace
+      // the "/" with "%2F".
       String attachmentPoint =
           String.format("cloudresourcemanager.googleapis.com/projects/%s", projectId)
               .replaceAll("/", "%2F");
 
+      // Construct the full path of the resource to which the policy is attached to.
+      // Its format is: "policies/{attachmentPoint}/denypolicies/{policyId}"
       String policyParent =
           String.format("policies/%s/denypolicies/%s", attachmentPoint, policyId);
 
-      // Specify the policyParent and execute the Policy Get request.
+      // Specify the policyParent and execute the GetPolicy request.
       GetPolicyRequest getPolicyRequest =
-          GetPolicyRequest.newBuilder().setName(policyParent).build();
+          GetPolicyRequest.newBuilder()
+              .setName(policyParent)
+              .build();
 
       Policy policy = policiesClient.getPolicy(getPolicyRequest);
       System.out.printf("Retrieved the deny policy: %s : %s%n", policyId, policy);

@@ -28,15 +28,31 @@ public class ListDenyPolicies {
     listDenyPolicies(projectId);
   }
 
+  // List all the deny policies that are attached to a resource.
+  // A resource can have up to 5 deny policies.
   public static void listDenyPolicies(String projectId) throws IOException {
-    // Initialize the IAM service.
+    // Initialize the Policies client.
     try (PoliciesClient policiesClient = PoliciesClient.create()) {
+
+      // Each deny policy is attached to an organization, folder, or project.
+      // To work with deny policies, specify the attachment point.
+      //
+      // Its format can be one of the following:
+      // 1. cloudresourcemanager.googleapis.com/organizations/ORG_ID
+      // 2. cloudresourcemanager.googleapis.com/folders/FOLDER_ID
+      // 3. cloudresourcemanager.googleapis.com/projects/PROJECT_ID
+      //
+      // The attachment point is identified by its URL-encoded full resource name. Hence, replace
+      // the "/" with "%2F".
       String attachmentPoint =
           String.format("cloudresourcemanager.googleapis.com/projects/%s", projectId)
               .replaceAll("/", "%2F");
 
+      // Construct the full path of the resource to which the policy is attached to.
+      // Its format is: "policies/{attachmentPoint}/denypolicies"
       String policyParent = String.format("policies/%s/denypolicies", attachmentPoint);
 
+      // Create a list request and iterate over the returned policies.
       for (Policy policy : policiesClient.listPolicies(policyParent).iterateAll()) {
         System.out.println(policy.getName());
       }
