@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+// [START iam_delete_deny_policy]
+
 import com.google.iam.v2beta.DeletePolicyRequest;
 import com.google.iam.v2beta.PoliciesClient;
 import com.google.longrunning.Operation;
@@ -80,3 +82,4 @@ public class DeleteDenyPolicy {
     }
   }
 }
+// [END iam_delete_deny_policy]

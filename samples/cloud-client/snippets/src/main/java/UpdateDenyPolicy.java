@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+// [START iam_update_deny_policy]
+
 import com.google.iam.v2beta.DenyRule;
 import com.google.iam.v2beta.PoliciesClient;
 import com.google.iam.v2beta.Policy;
@@ -137,3 +139,4 @@ public class UpdateDenyPolicy {
     }
   }
 }
+// [END iam_update_deny_policy]
