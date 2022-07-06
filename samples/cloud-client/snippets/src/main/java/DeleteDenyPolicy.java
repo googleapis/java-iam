@@ -58,18 +58,18 @@ public class DeleteDenyPolicy {
 
       // Construct the full path of the resource to which the policy is attached to.
       // Its format is: "policies/{attachmentPoint}/denypolicies/{policyId}"
-      String policyParent =
-          String.format("policies/%s/denypolicies/%s", attachmentPoint, policyId);
+      String policyParent = String.format("policies/%s/denypolicies/%s", attachmentPoint, policyId);
 
       // Create the DeletePolicy request.
       DeletePolicyRequest deletePolicyRequest =
-          DeletePolicyRequest.newBuilder()
-              .setName(policyParent)
-              .build();
+          DeletePolicyRequest.newBuilder().setName(policyParent).build();
 
       // Delete the policy and wait for the operation to complete.
-      Operation operation = policiesClient.deletePolicyCallable().futureCall(deletePolicyRequest)
-          .get(3, TimeUnit.MINUTES);
+      Operation operation =
+          policiesClient
+              .deletePolicyCallable()
+              .futureCall(deletePolicyRequest)
+              .get(3, TimeUnit.MINUTES);
 
       if (!operation.getDone() || operation.hasError()) {
         System.out.println("Error in deleting the policy " + operation.getError());

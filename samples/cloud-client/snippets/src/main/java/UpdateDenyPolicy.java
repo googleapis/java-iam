@@ -67,66 +67,80 @@ public class UpdateDenyPolicy {
 
       // Construct the full path of the resource to which the policy is attached to.
       // Its format is: "policies/{attachmentPoint}/denypolicies/{policyId}"
-      String policyParent =
-          String.format("policies/%s/denypolicies/%s", attachmentPoint, policyId);
+      String policyParent = String.format("policies/%s/denypolicies/%s", attachmentPoint, policyId);
 
-      DenyRule denyRule = DenyRule.newBuilder()
-          // Add one or more principals who should be denied the permissions specified in this rule.
-          // For more information on allowed values, see: https://cloud.google.com/iam/docs/principal-identifiers#v2
-          .addDeniedPrincipals("principalSet://goog/public:all")
+      DenyRule denyRule =
+          DenyRule.newBuilder()
+              // Add one or more principals who should be denied the permissions specified in this
+              // rule.
+              // For more information on allowed values, see:
+              // https://cloud.google.com/iam/docs/principal-identifiers#v2
+              .addDeniedPrincipals("principalSet://goog/public:all")
 
-          // Optionally, set the principals who should be exempted from the list of principals added in "DeniedPrincipals".
-          // Example, if you want to deny certain permissions to a group but exempt few principals, then add those here.
-          // .addExceptionPrincipals(
-          //     "principalSet://goog/group/project-admins@example.com")
+              // Optionally, set the principals who should be exempted from the list of principals
+              // added in "DeniedPrincipals".
+              // Example, if you want to deny certain permissions to a group but exempt few
+              // principals, then add those here.
+              // .addExceptionPrincipals(
+              //     "principalSet://goog/group/project-admins@example.com")
 
-          // Set the permissions to deny.
-          // The permission value is of the format: service_fqdn/resource.action
-          // For the list of supported permissions, see: https://cloud.google.com/iam/docs/deny-permissions-support
-          .addDeniedPermissions(
-              "cloudresourcemanager.googleapis.com/projects.delete")
+              // Set the permissions to deny.
+              // The permission value is of the format: service_fqdn/resource.action
+              // For the list of supported permissions, see:
+              // https://cloud.google.com/iam/docs/deny-permissions-support
+              .addDeniedPermissions("cloudresourcemanager.googleapis.com/projects.delete")
 
-          // Add the permissions to be exempted from this rule.
-          // Meaning, the deny rule will not be applicable to these permissions.
-          // .addExceptionPermissions("cloudresourcemanager.googleapis.com/projects.get")
+              // Add the permissions to be exempted from this rule.
+              // Meaning, the deny rule will not be applicable to these permissions.
+              // .addExceptionPermissions("cloudresourcemanager.googleapis.com/projects.get")
 
-          // Set the condition which will enforce the deny rule.
-          // If this condition is true, the deny rule will be applicable. Else, the rule will not be enforced.
-          .setDenialCondition(
-              Expr.newBuilder()
-                  // The expression uses Common Expression Language syntax (CEL). Here we block access based on tags.
-                  //
-                  // A tag is a key-value pair that can be attached to an organization, folder, or project. You can use deny policies to deny permissions based on tags without adding an IAM Condition to every role grant.
-                  // For example, imagine that you tag all of your projects as dev, test, or prod. You want only members of project-admins@example.com to be able to perform operations on projects that are tagged prod.
-                  // To solve this problem, you create a deny rule that denies the cloudresourcemanager.googleapis.com/projects.delete permission to everyone except project-admins@example.com for resources that are tagged prod.
-                  .setExpression("!resource.matchTag('12345678/env', 'prod')")
-                  .setTitle("Only for prod projects")
-                  .build())
-          .build();
+              // Set the condition which will enforce the deny rule.
+              // If this condition is true, the deny rule will be applicable. Else, the rule will
+              // not be enforced.
+              .setDenialCondition(
+                  Expr.newBuilder()
+                      // The expression uses Common Expression Language syntax (CEL). Here we block
+                      // access based on tags.
+                      //
+                      // A tag is a key-value pair that can be attached to an organization, folder,
+                      // or project. You can use deny policies to deny permissions based on tags
+                      // without adding an IAM Condition to every role grant.
+                      // For example, imagine that you tag all of your projects as dev, test, or
+                      // prod. You want only members of project-admins@example.com to be able to
+                      // perform operations on projects that are tagged prod.
+                      // To solve this problem, you create a deny rule that denies the
+                      // cloudresourcemanager.googleapis.com/projects.delete permission to everyone
+                      // except project-admins@example.com for resources that are tagged prod.
+                      .setExpression("!resource.matchTag('12345678/env', 'prod')")
+                      .setTitle("Only for prod projects")
+                      .build())
+              .build();
 
       // Set the policy resource path, version (etag) and the updated policy rules.
       Policy policy =
           Policy.newBuilder()
               .setName(policyParent)
               .setEtag(etag)
-              .addRules(PolicyRule.newBuilder()
-                  // Set the rule description to update.
-                  .setDescription(
-                      "Block all principals from deleting projects, unless the principal is a member of project-admins@example.com and the project being deleted has a tag with the value prod")
-                  // Set the deny rule to update.
-                  .setDenyRule(denyRule)
-                  .build())
+              .addRules(
+                  PolicyRule.newBuilder()
+                      // Set the rule description to update.
+                      .setDescription(
+                          "Block all principals from deleting projects, unless the principal is a member of project-admins@example.com and the project being deleted has a tag with the value prod")
+                      // Set the deny rule to update.
+                      .setDenyRule(denyRule)
+                      .build())
               .build();
 
       // Create the update policy request.
       UpdatePolicyRequest updatePolicyRequest =
-          UpdatePolicyRequest.newBuilder()
-              .setPolicy(policy)
-              .build();
+          UpdatePolicyRequest.newBuilder().setPolicy(policy).build();
 
       // Wait for the operation to complete.
-      Operation operation = policiesClient.updatePolicyCallable().futureCall(updatePolicyRequest)
-          .get(3, TimeUnit.MINUTES);
+      Operation operation =
+          policiesClient
+              .updatePolicyCallable()
+              .futureCall(updatePolicyRequest)
+              .get(3, TimeUnit.MINUTES);
 
       if (!operation.getDone() || operation.hasError()) {
         System.out.println("Error in updating the policy " + operation.getError());
