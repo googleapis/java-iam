@@ -36,10 +36,9 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class DenyIT {
 
-
   private static final String PROJECT_ID = System.getenv("GOOGLE_CLOUD_PROJECT");
-  private static final String GOOGLE_APPLICATION_CREDENTIALS = System.getenv(
-      "GOOGLE_APPLICATION_CREDENTIALS");
+  private static final String GOOGLE_APPLICATION_CREDENTIALS =
+      System.getenv("GOOGLE_APPLICATION_CREDENTIALS");
   private static String POLICY_ID;
 
   private ByteArrayOutputStream stdOut;
@@ -47,7 +46,8 @@ public class DenyIT {
   // Check if the required environment variables are set.
   public static void requireEnvVar(String envVarName) {
     assertWithMessage(String.format("Missing environment variable '%s' ", envVarName))
-        .that(System.getenv(envVarName)).isNotEmpty();
+        .that(System.getenv(envVarName))
+        .isNotEmpty();
   }
 
   @BeforeClass
@@ -67,7 +67,6 @@ public class DenyIT {
     stdOut.close();
     System.setOut(out);
   }
-
 
   @AfterClass
   public static void cleanup()
@@ -104,8 +103,8 @@ public class DenyIT {
   @Test
   public void testGetDenyPolicy() throws IOException {
     GetDenyPolicy.getDenyPolicy(PROJECT_ID, POLICY_ID);
-    assertThat(stdOut.toString()).contains(
-        String.format("Retrieved the deny policy: %s", POLICY_ID));
+    assertThat(stdOut.toString())
+        .contains(String.format("Retrieved the deny policy: %s", POLICY_ID));
     assertThat(stdOut.toString()).contains(POLICY_ID);
   }
 
@@ -124,9 +123,8 @@ public class DenyIT {
 
       // Test policy update.
       UpdateDenyPolicy.updateDenyPolicy(PROJECT_ID, POLICY_ID, policy.getEtag());
-      assertThat(stdOut.toString()).contains(
-          String.format("Updated the deny policy: %s", POLICY_ID));
+      assertThat(stdOut.toString())
+          .contains(String.format("Updated the deny policy: %s", POLICY_ID));
     }
   }
-
 }

@@ -56,14 +56,11 @@ public class GetDenyPolicy {
 
       // Construct the full path of the resource to which the policy is attached to.
       // Its format is: "policies/{attachmentPoint}/denypolicies/{policyId}"
-      String policyParent =
-          String.format("policies/%s/denypolicies/%s", attachmentPoint, policyId);
+      String policyParent = String.format("policies/%s/denypolicies/%s", attachmentPoint, policyId);
 
       // Specify the policyParent and execute the GetPolicy request.
       GetPolicyRequest getPolicyRequest =
-          GetPolicyRequest.newBuilder()
-              .setName(policyParent)
-              .build();
+          GetPolicyRequest.newBuilder().setName(policyParent).build();
 
       Policy policy = policiesClient.getPolicy(getPolicyRequest);
       System.out.printf("Retrieved the deny policy: %s : %s%n", policyId, policy);
