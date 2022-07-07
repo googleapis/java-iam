@@ -19,6 +19,8 @@
 import com.google.iam.v2beta.PoliciesClient;
 import com.google.iam.v2beta.Policy;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class ListDenyPolicies {
 
@@ -44,13 +46,12 @@ public class ListDenyPolicies {
       // 2. cloudresourcemanager.googleapis.com/folders/FOLDER_ID
       // 3. cloudresourcemanager.googleapis.com/projects/PROJECT_ID
       //
-      // The attachment point is identified by its URL-encoded full resource name. Hence, replace
-      // the "/" with "%2F".
-      String attachmentPoint =
-          String.format("cloudresourcemanager.googleapis.com/projects/%s", projectId)
-              .replaceAll("/", "%2F");
+      // The attachment point is identified by its URL-encoded resource name.
+      String urlEncodedResource = URLEncoder.encode("cloudresourcemanager.googleapis.com/projects/",
+          StandardCharsets.UTF_8);
+      String attachmentPoint = String.format("%s%s", urlEncodedResource, projectId);
 
-      // Construct the full path of the resource to which the policy is attached to.
+      // Construct the full path of the resource to which the policy is attached.
       // Its format is: "policies/{attachmentPoint}/denypolicies"
       String policyParent = String.format("policies/%s/denypolicies", attachmentPoint);
 

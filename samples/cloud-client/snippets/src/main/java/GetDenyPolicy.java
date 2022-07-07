@@ -20,6 +20,8 @@ import com.google.iam.v2beta.GetPolicyRequest;
 import com.google.iam.v2beta.PoliciesClient;
 import com.google.iam.v2beta.Policy;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class GetDenyPolicy {
 
@@ -29,13 +31,13 @@ public class GetDenyPolicy {
     // ID or number of the Google Cloud project you want to use.
     String projectId = "your-google-cloud-project-id";
 
-    // Specify the id of the deny policy you want to retrieve.
+    // Specify the ID of the deny policy you want to retrieve.
     String policyId = "deny-policy-id";
 
     getDenyPolicy(projectId, policyId);
   }
 
-  // Retrieve the deny policy given the project id and policy id.
+  // Retrieve the deny policy given the project ID and policy ID.
   public static void getDenyPolicy(String projectId, String policyId) throws IOException {
     // Create the IAM Policies client.
     try (PoliciesClient policiesClient = PoliciesClient.create()) {
@@ -48,13 +50,12 @@ public class GetDenyPolicy {
       // 2. cloudresourcemanager.googleapis.com/folders/FOLDER_ID
       // 3. cloudresourcemanager.googleapis.com/projects/PROJECT_ID
       //
-      // The attachment point is identified by its URL-encoded full resource name. Hence, replace
-      // the "/" with "%2F".
-      String attachmentPoint =
-          String.format("cloudresourcemanager.googleapis.com/projects/%s", projectId)
-              .replaceAll("/", "%2F");
+      // The attachment point is identified by its URL-encoded resource name.
+      String urlEncodedResource = URLEncoder.encode("cloudresourcemanager.googleapis.com/projects/",
+          StandardCharsets.UTF_8);
+      String attachmentPoint = String.format("%s%s", urlEncodedResource, projectId);
 
-      // Construct the full path of the resource to which the policy is attached to.
+      // Construct the full path of the resource to which the policy is attached.
       // Its format is: "policies/{attachmentPoint}/denypolicies/{policyId}"
       String policyParent = String.format("policies/%s/denypolicies/%s", attachmentPoint, policyId);
 

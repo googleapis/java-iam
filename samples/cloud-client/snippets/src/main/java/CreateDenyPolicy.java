@@ -24,6 +24,8 @@ import com.google.iam.v2beta.PolicyRule;
 import com.google.longrunning.Operation;
 import com.google.type.Expr;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -34,10 +36,10 @@ public class CreateDenyPolicy {
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
     // TODO(developer): Replace these variables before running the sample.
     // ID or number of the Google Cloud project you want to use.
-    String projectId = "your-google-cloud-project-id";
+    String projectId = "sitalakshmi-deny";
 
     // Specify the id of the Deny policy you want to create.
-    String policyId = "deny-policy-id";
+    String policyId = "deny-policy-id-1";
 
     createDenyPolicy(projectId, policyId);
   }
@@ -48,7 +50,7 @@ public class CreateDenyPolicy {
   //
   // Deny policies contain deny rules, which specify the following:
   // 1. The permissions to deny and/or exempt.
-  // 2. The principals that are denied/exempted from those permissions.
+  // 2. The principals that are denied, or exempted from denial.
   // 3. An optional condition on when to enforce the deny rules.
   public static void createDenyPolicy(String projectId, String policyId)
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
@@ -62,13 +64,12 @@ public class CreateDenyPolicy {
       // 2. cloudresourcemanager.googleapis.com/folders/FOLDER_ID
       // 3. cloudresourcemanager.googleapis.com/projects/PROJECT_ID
       //
-      // The attachment point is identified by its URL-encoded full resource name. Hence, replace
-      // the "/" with "%2F".
-      String attachmentPoint =
-          String.format("cloudresourcemanager.googleapis.com/projects/%s", projectId)
-              .replaceAll("/", "%2F");
+      // The attachment point is identified by its URL-encoded resource name.
+      String urlEncodedResource = URLEncoder.encode("cloudresourcemanager.googleapis.com/projects/",
+          StandardCharsets.UTF_8);
+      String attachmentPoint = String.format("%s%s", urlEncodedResource, projectId);
 
-      // Construct the full path of the resource to which the policy is attached to.
+      // Construct the full path of the resource to which the policy is attached.
       // Its format is: "policies/{attachmentPoint}/denypolicies/{policyId}"
       String policyParent = String.format("policies/%s/denypolicies", attachmentPoint);
 
@@ -77,19 +78,19 @@ public class CreateDenyPolicy {
               // Add one or more principals who should be denied the permissions specified in this
               // rule.
               // For more information on allowed values, see:
-              // https://cloud.google.com/iam/docs/principal-identifiers#v2
+              // https://cloud.google.com/iam/docs/principal-identifiers
               .addDeniedPrincipals("principalSet://goog/public:all")
 
-              // Optionally, set the principals who should be exempted from the list of principals
-              // added in "DeniedPrincipals". Example, if you want to deny certain permissions
-              // to a group but exempt few principals, then add those here.
+              // Optionally, set the principals who should be exempted from the
+              // list of denied principals. For example, if you want to deny certain permissions
+              // to a group but exempt a few principals, then add those here.
               // .addExceptionPrincipals(
               //     "principalSet://goog/group/project-admins@example.com")
 
               // Set the permissions to deny.
               // The permission value is of the format: service_fqdn/resource.action
               // For the list of supported permissions, see:
-              // https://cloud.google.com/iam/docs/deny-permissions-support
+              // https://cloud.google.com/iam/help/deny/supported-permissions
               .addDeniedPermissions("cloudresourcemanager.googleapis.com/projects.delete")
 
               // Optionally, add the permissions to be exempted from this rule.
@@ -117,7 +118,7 @@ public class CreateDenyPolicy {
                       .build())
               .build();
 
-      // Add the policy rule and a description for it.
+      // Add the deny rule and a description for it.
       Policy policy =
           Policy.newBuilder()
               // Set the deny rule.
@@ -130,7 +131,7 @@ public class CreateDenyPolicy {
                       .build())
               .build();
 
-      // Set the policy resource path, policy rules and a unique id for the policy.
+      // Set the policy resource path, policy rules and a unique ID for the policy.
       CreatePolicyRequest createPolicyRequest =
           CreatePolicyRequest.newBuilder()
               .setParent(policyParent)
