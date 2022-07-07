@@ -65,8 +65,9 @@ public class CreateDenyPolicy {
       // 3. cloudresourcemanager.googleapis.com/projects/PROJECT_ID
       //
       // The attachment point is identified by its URL-encoded resource name.
-      String urlEncodedResource = URLEncoder.encode("cloudresourcemanager.googleapis.com/projects/",
-          StandardCharsets.UTF_8);
+      String urlEncodedResource =
+          URLEncoder.encode(
+              "cloudresourcemanager.googleapis.com/projects/", StandardCharsets.UTF_8);
       String attachmentPoint = String.format("%s%s", urlEncodedResource, projectId);
 
       // Construct the full path of the resource to which the policy is attached.
