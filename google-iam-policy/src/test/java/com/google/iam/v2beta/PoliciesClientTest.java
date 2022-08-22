@@ -133,54 +133,7 @@ public class PoliciesClientTest {
   public void getPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
-            .setName(PolicyName.of("[POLICY]").toString())
-            .setUid("uid115792")
-            .setKind("kind3292052")
-            .setDisplayName("displayName1714148973")
-            .putAllAnnotations(new HashMap<String, String>())
-            .setEtag("etag3123477")
-            .setCreateTime(Timestamp.newBuilder().build())
-            .setUpdateTime(Timestamp.newBuilder().build())
-            .setDeleteTime(Timestamp.newBuilder().build())
-            .addAllRules(new ArrayList<PolicyRule>())
-            .build();
-    mockPolicies.addResponse(expectedResponse);
-
-    PolicyName name = PolicyName.of("[POLICY]");
-
-    Policy actualResponse = client.getPolicy(name);
-    Assert.assertEquals(expectedResponse, actualResponse);
-
-    List<AbstractMessage> actualRequests = mockPolicies.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
-    GetPolicyRequest actualRequest = ((GetPolicyRequest) actualRequests.get(0));
-
-    Assert.assertEquals(name.toString(), actualRequest.getName());
-    Assert.assertTrue(
-        channelProvider.isHeaderSent(
-            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
-            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
-  }
-
-  @Test
-  public void getPolicyExceptionTest() throws Exception {
-    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
-    mockPolicies.addException(exception);
-
-    try {
-      PolicyName name = PolicyName.of("[POLICY]");
-      client.getPolicy(name);
-      Assert.fail("No exception raised");
-    } catch (InvalidArgumentException e) {
-      // Expected exception.
-    }
-  }
-
-  @Test
-  public void getPolicyTest2() throws Exception {
-    Policy expectedResponse =
-        Policy.newBuilder()
-            .setName(PolicyName.of("[POLICY]").toString())
+            .setName("name3373707")
             .setUid("uid115792")
             .setKind("kind3292052")
             .setDisplayName("displayName1714148973")
@@ -210,7 +163,7 @@ public class PoliciesClientTest {
   }
 
   @Test
-  public void getPolicyExceptionTest2() throws Exception {
+  public void getPolicyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockPolicies.addException(exception);
 
@@ -227,7 +180,7 @@ public class PoliciesClientTest {
   public void createPolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
-            .setName(PolicyName.of("[POLICY]").toString())
+            .setName("name3373707")
             .setUid("uid115792")
             .setKind("kind3292052")
             .setDisplayName("displayName1714148973")
@@ -288,7 +241,7 @@ public class PoliciesClientTest {
   public void updatePolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
-            .setName(PolicyName.of("[POLICY]").toString())
+            .setName("name3373707")
             .setUid("uid115792")
             .setKind("kind3292052")
             .setDisplayName("displayName1714148973")
@@ -345,62 +298,7 @@ public class PoliciesClientTest {
   public void deletePolicyTest() throws Exception {
     Policy expectedResponse =
         Policy.newBuilder()
-            .setName(PolicyName.of("[POLICY]").toString())
-            .setUid("uid115792")
-            .setKind("kind3292052")
-            .setDisplayName("displayName1714148973")
-            .putAllAnnotations(new HashMap<String, String>())
-            .setEtag("etag3123477")
-            .setCreateTime(Timestamp.newBuilder().build())
-            .setUpdateTime(Timestamp.newBuilder().build())
-            .setDeleteTime(Timestamp.newBuilder().build())
-            .addAllRules(new ArrayList<PolicyRule>())
-            .build();
-    Operation resultOperation =
-        Operation.newBuilder()
-            .setName("deletePolicyTest")
-            .setDone(true)
-            .setResponse(Any.pack(expectedResponse))
-            .build();
-    mockPolicies.addResponse(resultOperation);
-
-    PolicyName name = PolicyName.of("[POLICY]");
-
-    Policy actualResponse = client.deletePolicyAsync(name).get();
-    Assert.assertEquals(expectedResponse, actualResponse);
-
-    List<AbstractMessage> actualRequests = mockPolicies.getRequests();
-    Assert.assertEquals(1, actualRequests.size());
-    DeletePolicyRequest actualRequest = ((DeletePolicyRequest) actualRequests.get(0));
-
-    Assert.assertEquals(name.toString(), actualRequest.getName());
-    Assert.assertTrue(
-        channelProvider.isHeaderSent(
-            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
-            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
-  }
-
-  @Test
-  public void deletePolicyExceptionTest() throws Exception {
-    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
-    mockPolicies.addException(exception);
-
-    try {
-      PolicyName name = PolicyName.of("[POLICY]");
-      client.deletePolicyAsync(name).get();
-      Assert.fail("No exception raised");
-    } catch (ExecutionException e) {
-      Assert.assertEquals(InvalidArgumentException.class, e.getCause().getClass());
-      InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
-      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
-    }
-  }
-
-  @Test
-  public void deletePolicyTest2() throws Exception {
-    Policy expectedResponse =
-        Policy.newBuilder()
-            .setName(PolicyName.of("[POLICY]").toString())
+            .setName("name3373707")
             .setUid("uid115792")
             .setKind("kind3292052")
             .setDisplayName("displayName1714148973")
@@ -436,7 +334,7 @@ public class PoliciesClientTest {
   }
 
   @Test
-  public void deletePolicyExceptionTest2() throws Exception {
+  public void deletePolicyExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockPolicies.addException(exception);
 
