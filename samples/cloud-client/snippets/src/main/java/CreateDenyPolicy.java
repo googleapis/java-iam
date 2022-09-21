@@ -16,7 +16,6 @@
 
 // [START iam_create_deny_policy]
 
-
 import com.google.iam.v2.CreatePolicyRequest;
 import com.google.iam.v2.DenyRule;
 import com.google.iam.v2.PoliciesClient;
