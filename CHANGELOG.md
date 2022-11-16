@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.6.12](https://github.com/googleapis/java-iam/compare/v1.6.11...v1.6.12) (2022-11-16)
+
+
+### Dependencies
+
+* Update dependency com.google.auth:google-auth-library-oauth2-http to v1.13.0 ([#522](https://github.com/googleapis/java-iam/issues/522)) ([37e4984](https://github.com/googleapis/java-iam/commit/37e4984d96e78117225ccccaf807386f6b699e04))
+* Update dependency com.google.cloud:google-iam-policy to v1.6.11 ([#521](https://github.com/googleapis/java-iam/issues/521)) ([dd07607](https://github.com/googleapis/java-iam/commit/dd07607d4de0dfb6b1f0852fcaf18c9c035c5467))
+
+## [1.6.11](https://github.com/googleapis/java-iam/compare/v1.6.10...v1.6.11) (2022-11-15)
+
+
+### Dependencies
+
+* Update dependency com.google.cloud:google-iam-policy to v1.6.10 ([#518](https://github.com/googleapis/java-iam/issues/518)) ([93a1e60](https://github.com/googleapis/java-iam/commit/93a1e60f4feb89a1ff1104aa890df01764d99944))
+
+## [1.6.10](https://github.com/googleapis/java-iam/compare/v1.6.9...v1.6.10) (2022-11-14)
+
+
+### Dependencies
+
+* Update dependency com.google.apis:google-api-services-cloudresourcemanager to v3-rev20221108-2.0.0 ([#514](https://github.com/googleapis/java-iam/issues/514)) ([c754e5a](https://github.com/googleapis/java-iam/commit/c754e5af64a4e67c9fd8b3db8019e208f39da3ba))
+* Update dependency com.google.cloud:google-iam-policy to v1.6.9 ([#513](https://github.com/googleapis/java-iam/issues/513)) ([e7e1836](https://github.com/googleapis/java-iam/commit/e7e18368d573f333057faead618bc24ad2199e6c))
+
+## [1.6.9](https://github.com/googleapis/java-iam/compare/v1.6.8...v1.6.9) (2022-11-09)
+
+
+### Dependencies
+
+* Update dependency com.google.cloud:google-iam-policy to v1.6.8 ([#509](https://github.com/googleapis/java-iam/issues/509)) ([706621d](https://github.com/googleapis/java-iam/commit/706621d7a70ddc29a69230416dc723508629eac1))
+
 ## [1.6.8](https://github.com/googleapis/java-iam/compare/v1.6.7...v1.6.8) (2022-11-08)
 
 
