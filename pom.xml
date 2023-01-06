@@ -92,7 +92,7 @@
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-iam-v2</artifactId>
-        <version>1.6.24-SNAPSHOT</version><!-- {x-version-update:grpc-google-iam-v2:current} -->
+        <version>1.7.0</version><!-- {x-version-update:grpc-google-iam-v2:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.cloud</groupId>
