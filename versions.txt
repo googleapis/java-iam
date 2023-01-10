@@ -2,4 +2,3 @@
 # module:released-version:current-version
 
 google-iam-policy:1.6.23:1.6.24-SNAPSHOT
-proto-google-iam-v1:0.0.0:0.0.1-SNAPSHOT
