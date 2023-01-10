@@ -120,6 +120,7 @@
   </dependencyManagement>
 
   <modules>
+    <module>proto-google-iam-v1</module>
     <module>google-iam-policy</module>
   </modules>
 
