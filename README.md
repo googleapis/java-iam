@@ -13,6 +13,7 @@ https://github.com/googleapis/google-cloud-java/tree/main/java-iam).
 This repository will be archived in the future.
 Future releases will appear in the new repository (https://github.com/googleapis/google-cloud-java/releases).
 The Maven artifact coordinates (`com.google.cloud:google-iam-policy`) remain the same.
+Sample code is in https://github.com/GoogleCloudPlatform/java-docs-samples.
 
 The other artifacts (`grpc-google-iam-v1`, `grpc-google-iam-v2`, `grpc-google-iam-v2beta`,
 `proto-google-iam-v1`, `proto-google-iam-v2`, and `proto-google-iam-v2beta`) have moved to
