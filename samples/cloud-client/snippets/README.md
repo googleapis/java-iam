@@ -1,1 +1,0 @@
-The samples in this repository have been moved to [GoogleCloudPlatform/java-docs-samples/iam](https://github.com/GoogleCloudPlatform/java-docs-samples/tree/main/iam/snippets) in PR: https://github.com/GoogleCloudPlatform/java-docs-samples/pull/7419
